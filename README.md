@@ -12,7 +12,7 @@ API em NestJS, TypeScript, Drizzle ORM e MySQL para o projeto da disciplina Banc
 - `logs`
 - `firmware_versions`
 
-## Configuracao
+## Configuração
 
 Copie `.env.example` para `.env` e ajuste as credenciais do MySQL.
 
@@ -24,9 +24,9 @@ npm run db:seed
 npm run start:dev
 ```
 
-O comando `db:create` cria o database definido em `DB_NAME`, caso ele ainda nao exista.
+O comando `db:create` cria o database definido em `DB_NAME`, caso ele ainda não exista.
 
-A documentacao Swagger fica disponivel em:
+A documentação Swagger fica disponível em:
 
 ```txt
 http://localhost:3000/api
@@ -42,12 +42,12 @@ Cada entidade possui:
 - `PATCH /resource/:id`
 - `DELETE /resource/:id`
 
-Filtros disponiveis:
+Filtros disponíveis:
 
 - `GET /users?isActive=true`
 - `GET /users?isActive=false`
 
-## Manutencao de tabelas
+## Manutenção de tabelas
 
 Para limpar uma tabela permitida:
 
@@ -64,17 +64,17 @@ Tabelas aceitas: `users`, `locations`, `tvs`, `devices`, `commands`, `logs`, `fi
 
 ## DCL
 
-Os comandos DCL ficam em `src/database/dcl` e nao sao expostos por endpoints.
-Eles devem ser executados manualmente no MySQL com um usuario administrador.
+Os comandos DCL ficam em `src/database/dcl` e não são expostos por endpoints.
+Eles devem ser executados manualmente no MySQL com um usuário administrador.
 
-Scripts disponiveis:
+Scripts disponíveis:
 
-- `001_create_database_users.sql`: cria usuarios separados para runtime, manutencao e migrations.
-- `002_grant_app_permissions.sql`: concede CRUD e SELECT nas views para o usuario da API.
-- `003_grant_maintenance_permissions.sql`: concede permissoes necessarias para rotinas como truncate.
-- `004_grant_migrator_permissions.sql`: concede permissoes para rodar migrations.
-- `005_revoke_dangerous_app_permissions.sql`: remove permissoes administrativas do usuario da API.
-- `999_drop_database_users.sql`: remove os usuarios criados pelos scripts DCL.
+- `001_create_database_users.sql`: cria usuários separados para runtime, manutenção e migrations.
+- `002_grant_app_permissions.sql`: concede CRUD e SELECT nas views para o usuário da API.
+- `003_grant_maintenance_permissions.sql`: concede permissões necessárias para rotinas como truncate.
+- `004_grant_migrator_permissions.sql`: concede permissões para rodar migrations.
+- `005_revoke_dangerous_app_permissions.sql`: remove permissões administrativas do usuário da API.
+- `999_drop_database_users.sql`: remove os usuários criados pelos scripts DCL.
 
 Exemplo:
 
@@ -83,7 +83,7 @@ mysql -u root -p < src/database/dcl/001_create_database_users.sql
 mysql -u root -p < src/database/dcl/002_grant_app_permissions.sql
 ```
 
-Recursos disponiveis:
+Recursos disponíveis:
 
 - `/users`
 - `/locations`
@@ -93,18 +93,18 @@ Recursos disponiveis:
 - `/logs`
 - `/firmware-versions`
 
-Todas as queries da aplicacao ficam em `src/database/queries` e usam `sql` puro do Drizzle.
-As migrations ficam em `src/database/migrations` e sao controladas pelo Drizzle Kit.
+Todas as queries da aplicação ficam em `src/database/queries` e usam `sql` puro do Drizzle.
+As migrations ficam em `src/database/migrations` e são controladas pelo Drizzle Kit.
 
 ## Seed
 
-Depois de rodar as migrations, popule a base com dados de demonstracao:
+Depois de rodar as migrations, popule a base com dados de demonstração:
 
 ```bash
 npm run db:seed
 ```
 
-A seed fica em `src/database/seeds/seed.ts`, limpa as tabelas na ordem correta e recria uma base robusta com usuarios ativos/inativos, locais, TVs, devices, firmwares, comandos e logs.
+A seed fica em `src/database/seeds/seed.ts`, limpa as tabelas na ordem correta e recria uma base robusta com usuários ativos/inativos, locais, TVs, devices, firmwares, comandos e logs.
 
 ## Views de logs
 
@@ -120,7 +120,7 @@ Rotas de consulta:
 - `GET /logs/by-tv/:tvId`
 - `GET /logs/by-device/:deviceId`
 
-As consultas de logs retornam no maximo 50 registros por chamada, ordenados do mais recente para o mais antigo.
+As consultas de logs retornam no máximo 50 registros por chamada, ordenados do mais recente para o mais antigo.
 Use `limit` e `offset` para paginar:
 
 - `GET /logs?limit=50&offset=0`
