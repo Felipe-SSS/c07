@@ -16,11 +16,14 @@ API em NestJS, TypeScript, Drizzle ORM e MySQL para o projeto da disciplina Banc
 
 Copie `.env.example` para `.env` e ajuste as credenciais do MySQL.
 
+### IMPORTANTE: Certifique-se que o `Node.js` esteja instalado em sua máquina.
+
 ```bash
 npm install
 npm run db:create
 npm run db:migrate
 npm run db:seed
+npm run build
 npm run start:dev
 ```
 
