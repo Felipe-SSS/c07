@@ -125,3 +125,96 @@ Use `limit` e `offset` para paginar:
 
 - `GET /logs?limit=50&offset=0`
 - `GET /logs/by-user/1?limit=25&offset=50`
+
+```mermaid
+erDiagram
+    users {
+        int id PK
+        varchar full_name
+        varchar email
+        varchar password_hash
+        enum role
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    locations {
+        int id PK
+        varchar name
+        text description
+        varchar address
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    tvs {
+        int id PK
+        varchar brand
+        varchar model
+        varchar serial_number
+        enum status
+        int location_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    firmware_versions {
+        int id PK
+        varchar code
+        varchar version
+        text changelog
+        timestamp release_date
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    devices {
+        int id PK
+        varchar mac_address
+        varchar firmware_version
+        int firmware_version_id FK
+        varchar mqtt_topic
+        enum connectivity_status
+        int tv_id FK "UNIQUE"
+        int location_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    commands {
+        int id PK
+        enum type
+        json payload
+        enum status
+        timestamp sent_at
+        timestamp responded_at
+        int created_by_user_id FK
+        int device_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    logs {
+        int id PK
+        varchar type
+        varchar category
+        text message
+        json metadata
+        int actor_user_id FK
+        int device_id FK
+        int tv_id FK
+        timestamp created_at
+    }
+
+    %% Relacionamentos mapeados a partir das Foreign Keys e regras das migrations
+    locations ||--o{ tvs : "possui"
+    locations ||--o{ devices : "possui"
+    tvs ||--|| devices : "controlada por (ON DELETE CASCADE)"
+    firmware_versions ||--o{ devices : "instalada em"
+    users ||--o{ commands : "envia (ON DELETE CASCADE)"
+    devices ||--o{ commands : "recebe (ON DELETE CASCADE)"
+    users ||--o{ logs : "gera ação (ON DELETE SET NULL)"
+    devices ||--o{ logs : "registra evento (ON DELETE SET NULL)"
+    tvs ||--o{ logs : "registra evento (ON DELETE SET NULL)"
+```
